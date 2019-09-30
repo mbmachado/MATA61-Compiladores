@@ -15,7 +15,7 @@ int main(int argc, char const *argv[])
 		string line;
 		ifstream file;
 		file.open("lexical/source-program-1.txt");
-		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		file.exceptions(ifstream::failbit | ifstream::badbit);
 
 		while(getline(file, line)) {
 		   cout << line << endl;

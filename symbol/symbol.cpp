@@ -24,6 +24,8 @@ int Symbol::getLine() {
 	return line;
 }
 
+SymbolTable::SymbolTable() {}
+
 int SymbolTable::insertSymbol(Symbol s) {
 	symbols.push_back(s);
 	//TODO retornar posição inserida;

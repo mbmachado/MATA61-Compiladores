@@ -18,6 +18,20 @@ class Token {
 };
 
 /**
+ * The Lexical Analyzer class
+ */
+class Lexical {
+	private:
+		static Lexical* instance;
+		Lexical();
+
+	public:
+		static Lexical* getInstance();
+		Token getNextToken();
+	
+};
+
+/**
  * The Robot_L_Lexical_Exception class
  * @extends exception
  *
@@ -25,6 +39,8 @@ class Token {
 class Robot_L_Lexical_Exception : public exception {
 	private:
 		int code;
+		int line;
+		int column;
 
 	public:
 		Robot_L_Lexical_Exception(int c) : code(c) {}
