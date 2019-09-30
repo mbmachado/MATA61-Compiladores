@@ -1,5 +1,5 @@
 #include <vector>
-#include <string.h>
+#include <string>
 
 using namespace std;
 
@@ -13,30 +13,12 @@ class Symbol {
 		int line;
 		int value;
 
-
 	public:
-		Symbol(string le, int c, int li) {
-			lexeme = le;
-			column = c;
-			line = li;
-		}
-
-		Symbol(int v) {
-			value = v;
-		}
-
-		string getLexeme() {
-			return lexeme;
-		}
-
-		int getColumn() {
-			return column;
-		}
-
-		int getLine() {
-			return line;
-		}		
-	
+		Symbol(string le, int c, int li);
+		Symbol(int v);
+		string getLexeme();
+		int getColumn();
+		int getLine();	
 };
 
 /**
@@ -54,15 +36,6 @@ class SymbolTable {
 	
 	public:
 		SymbolTable();
-	
-		int insertSymbol(Symbol s) {
-			symbols.push_back(s);
-			//TODO retornar posição inserida;
-			return 1;
-		}
-
-		bool isKeyWord() {
-			//TODO verificar se lexema é keyword;
-			return true;
-		}
+		int insertSymbol(Symbol s);
+		bool isKeyWord();
 };

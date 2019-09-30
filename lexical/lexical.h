@@ -1,5 +1,4 @@
-#include <vector>
-#include <string.h>
+#include <string>
 #include <exception>
 
 using namespace std;
@@ -13,18 +12,9 @@ class Token {
     	int attribute;
 
     public:
-    	Token(string n, int a) {
-    		name = n;
-    		attribute = a; 
-    	}
-
-    	string getName() {
-    		return name;
-    	}
-
-    	int getAttribute() {
-    		return attribute;
-    	}
+    	Token(string n, int a);
+    	string getName();
+    	int getAttribute();
 };
 
 /**
@@ -37,10 +27,7 @@ class Robot_L_Lexical_Exception : public exception {
 		int code;
 
 	public:
-		Robot_L_Lexical_Exception(int c) {
-			code = c;
-		}
-
+		Robot_L_Lexical_Exception(int c) : code(c) {}
 		virtual const char* what() const throw() {
 			switch (code) {
 				case 1:
