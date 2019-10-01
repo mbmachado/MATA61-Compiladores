@@ -63,7 +63,7 @@ int SymbolTable::installID(string lexeme, int column, int line) {
 int SymbolTable::installNum(string lexeme, int column, int line) {
 	int value = 1;
 	if(lexeme.size() > 6) {
-		throw Robot_L_Lexical_Exception(3);
+		throw Robot_L_Lexical_Exception(3, line, column);
 	} else {
 		value = stoi(lexeme, nullptr);
 	}

@@ -1,5 +1,6 @@
 #include <string>
 #include <exception>
+#include <iostream>
 
 using namespace std;
 
@@ -22,8 +23,8 @@ class Token {
  */
 class Lexical {
 	private:
-		int currentLine;
-		int currentColumn;
+		int line;
+		int column;
 
 	public:
 		Lexical();
@@ -42,25 +43,19 @@ class Lexical {
  */
 class Robot_L_Lexical_Exception : public exception {
 	private:
-		int code;
-		int line;
-		int column;
+		string message;
 
 	public:
-		Robot_L_Lexical_Exception(int c) : code(c) {}
+		Robot_L_Lexical_Exception(int code, int line, int column) {
+			if (code == 1) message = "Error Exception: Identificador mal formado na linha " + to_string(line) + ", coluna " + to_string(column) +".";
+			else if (code == 2) message = "Error Exception: Número mal formado na linha " + to_string(line) + ", coluna " + to_string(column) +".";
+			else if (code == 3) message = "Error Exception: Valor numérico muito grande na linha " + to_string(line) + ", coluna " + to_string(column) +".";
+			else if (code == 4) message = "Error Exception: Símbolo não reconhecido na linha " + to_string(line) + ", coluna " + to_string(column) +".";
+			else message = "Error Exception: erro desconhecido.";
+		}
+
 		virtual const char* what() const throw() {
-			switch (code) {
-				case 1:
-					return "Error Exception: Identificador mal formado na linha y, coluna x.";
-				case 2:
-					return "Error Exception: Número mal formado na linha y, coluna x.";
-				case 3:
-					return "Error Exception: Valor numérico muito grande na linha y, coluna x.";
-				case 4:
-					return "Error Exception: Símbolo não reconhecido na linha y, coluna x.";
-				default:
-					return "Error Exception: código de erro desconhecido.";
-			}
+			return message.c_str();
 		}  
 };
 

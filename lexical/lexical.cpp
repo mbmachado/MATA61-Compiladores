@@ -5,7 +5,10 @@
 
 using namespace std;
 
-Lexical::Lexical() {}
+Lexical::Lexical() {
+	line = 0;
+	column = 0;
+}
 
 Token Lexical::getNextToken(istream& file) {
 	try {
@@ -23,31 +26,31 @@ Token Lexical::getNextToken(istream& file) {
 					else if(isDelimiter(c)) state = 7;
 					else if(isLetter(c)) state = 1;
 					else if(isDigit(c)) state = 3;
-					else throw Robot_L_Lexical_Exception(4);
+					else throw Robot_L_Lexical_Exception(4, line, column);
 					break;
 				case 1:
 					//cout << "no estado 1, comparando: '" << c << "'" << endl;
 					if(isDelimiter(c)) { state = 2; file.unget(); lexeme.pop_back(); }
 					else if(isAlphanumeric(c)) state = 1;
-					else throw Robot_L_Lexical_Exception(1);
+					else throw Robot_L_Lexical_Exception(1, line, column);
 					//cout << "next state: " << state << endl;
 					break;
 				case 2:
 					//cout << "estado 2" << endl;
 					file.unget();
 					lexeme.pop_back();
-					return Token(st->getTokenName(lexeme), st->installID(lexeme, 0, 0));
+					return Token(st->getTokenName(lexeme), st->installID(lexeme, column, line));
 				case 3:
 					//cout << "estado 3" << endl;
 					if(isDelimiter(c)) { state = 4; file.unget(); lexeme.pop_back(); }
 					else if(isDigit(c)) state = 3;
-					else throw Robot_L_Lexical_Exception(2);
+					else throw Robot_L_Lexical_Exception(2, line, column);
 					break;
 				case 4:
 					//cout << "estado 4" << endl;
 					file.unget();
 					lexeme.pop_back();
-					return Token("num",  st->installNum(lexeme, 0, 0));
+					return Token("num",  st->installNum(lexeme, column, line));
 				case 5:
 					//cout << "estado 5" << endl;
 					if(!isNewLine(c)) state = 5; 
