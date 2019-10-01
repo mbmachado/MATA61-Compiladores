@@ -1,3 +1,5 @@
+# Exemplo de comentário genteeeee
+
 PROGRAMAINICIO
 	DEFINAINSTRUCAO Trilha COMO
 	INICIO
@@ -9,8 +11,9 @@ PROGRAMAINICIO
 		Mova 1 Passo
 		Aguarde Ate Robo Pronto
 	FIM
-	EXECUCAOINICIO
+	EXECUCAOINICIO@
 		Repita 3 VEZES Trilha
 		Vire Para DIREITA
 	FIMEXECUCAO
 FIMPROGRAMA
+

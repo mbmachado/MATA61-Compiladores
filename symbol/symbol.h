@@ -1,4 +1,5 @@
 #include <vector>
+#include <set>
 #include <string>
 
 using namespace std;
@@ -26,16 +27,22 @@ class Symbol {
  */
 class SymbolTable {
 	private:
-		vector<string> keyWords{"programainicio", "execucaoinicio", "fimexecucao", "fimprograma", "definainstrucao", 
+		static SymbolTable* instance;
+		SymbolTable();
+		set<string> keyWords{"programainicio", "execucaoinicio", "fimexecucao", "fimprograma", "definainstrucao", 
 			"como", "inicio", "fim", "repita", "vezes", "fimrepita", "enquanto", "faca", "fimpara", "se", "entao", 
-			"fimse", "senao", "fimsenao", "mova", "passo", "para", "pare", "finalize", "apague", "acenda", "lampada", 
-			"acessa", "apagada", "robo", "pronto", "ocupado", "parado", "movimentando", "bloqueada", "a", "frente", 
-			"direita", "esquerda" 
+			"fimse", "senao", "fimsenao", "mova", "passo", "passos", "vire", "para", "pare", "finalize", "apague", 
+			"acenda", "lampada", "aguarde", "ate", "robo", "pronto", "ocupado", "parado", "movimentando", "frente",
+			"direita", "esquerda", "bloqueada", "acessa", "apagada", "a"
 		};
 		vector<Symbol> symbols;
 	
 	public:
-		SymbolTable();
-		int insertSymbol(Symbol s);
+		SymbolTable(const SymbolTable&) = delete;
+		SymbolTable& operator=(const SymbolTable&) = delete;
+		static SymbolTable* getInstance();
+		string getTokenName(string lexeme);
+		int installID(string lexeme, int column, int line);
+		int installNum(string lexeme, int column, int line);
 		bool isKeyWord();
 };

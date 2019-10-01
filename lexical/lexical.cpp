@@ -1,5 +1,7 @@
 #include "lexical.h"
+#include "../symbol/symbol.h"
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -9,66 +11,71 @@ Token Lexical::getNextToken(istream& file) {
 	try {
 		int state = 0;
 		char c; string lexeme = "";
+		SymbolTable* st = SymbolTable::getInstance();
+		
 		while (file.get(c)) {
-
 			lexeme += c;
-
-			//cout << "Lendo:" << "'" << c << "'" << endl;
-			//cout << "Lexema atual:" << "'" << lexeme << "'" << endl;
+			
 			switch (state) {
 				case 0:
-					//cout << "estado 0" << endl;
+					//cout << "no estado 0, comparando: '" << c << "'" << endl;
 					if(c == '#') state = 5;
-					else if(isDigit(c)) state = 3;
-					else if(isLetter(c)) state = 1;
 					else if(isDelimiter(c)) state = 7;
+					else if(isLetter(c)) state = 1;
+					else if(isDigit(c)) state = 3;
 					else throw Robot_L_Lexical_Exception(4);
 					break;
 				case 1:
-					//cout << "estado 1" << endl;
-					if(isAlphanumeric(c)) state = 1;
-					else state = 2; 
+					//cout << "no estado 1, comparando: '" << c << "'" << endl;
+					if(isDelimiter(c)) { state = 2; file.unget(); lexeme.pop_back(); }
+					else if(isAlphanumeric(c)) state = 1;
+					else throw Robot_L_Lexical_Exception(1);
+					//cout << "next state: " << state << endl;
 					break;
 				case 2:
 					//cout << "estado 2" << endl;
 					file.unget();
 					lexeme.pop_back();
-					return Token("id", lexeme);
+					return Token(st->getTokenName(lexeme), st->installID(lexeme, 0, 0));
 				case 3:
 					//cout << "estado 3" << endl;
-					if(isDigit(c)) state = 3;
-					else state = 4;
+					if(isDelimiter(c)) { state = 4; file.unget(); lexeme.pop_back(); }
+					else if(isDigit(c)) state = 3;
+					else throw Robot_L_Lexical_Exception(2);
 					break;
 				case 4:
 					//cout << "estado 4" << endl;
 					file.unget();
 					lexeme.pop_back();
-					return Token("num", lexeme);
+					return Token("num",  st->installNum(lexeme, 0, 0));
 				case 5:
 					//cout << "estado 5" << endl;
-					if(c != '\n') state = 5; 
-					else state = 6;
+					if(!isNewLine(c)) state = 5; 
+					else { state = 6; file.unget(); }
 					break;
 				case 6:
-					lexeme = "";
-					state = 0;
 					//cout << "estado 6" << endl;
+					state = 0;
+					lexeme = "";
 					break;
 				case 7:
 					//cout << "estado 7" << endl;
-					if(c == 9 || c == 32 || c == 10) state = 7;
-					else state = 8;
+					if(isDelimiter(c)) state = 7;
+					else { state = 8; file.unget(); }
 					break;
 				case 8:
 					//cout << "estado 8" << endl;
-					lexeme = "";
 					state = 0;
 					file.unget();
+					lexeme = "";
 					break;
 			}
 		}
+
+		return Token("EOF", 0);
 	} catch (Robot_L_Lexical_Exception e) {
 		cout << e.what() << endl;
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -119,22 +126,20 @@ bool Lexical::isAlphanumeric(char c) {
 	return false;
 }
 
-bool Lexical::isDelimiter(char c) {
-	//c == 9 || c == 32 || c == 10 ASCII way
-	if( c == '	') {
-		//cout << "tab" << endl;
+bool Lexical::isNewLine(char c) {
+	if(c == '\n' || c == '\r') 
 		return true;
-	} else if(c == '\n') {
-		//cout << "newLine" << endl;
-		return true;
-	} else if(c == ' ') {
-		//cout << "blank" << endl;
-		return true;
-	}
 	return false;
 }
 
-Token::Token(string n, string a) {
+bool Lexical::isDelimiter(char c) {
+	// ASCII way c == 9 || c == 32 || c == 10 || c == 13
+	if(isNewLine(c) || c == '	' || c == ' ')
+		return true;
+	return false;
+}
+
+Token::Token(string n, int a) {
 	name = n;
     attribute = a;
 }
@@ -143,6 +148,6 @@ string Token::getName() {
 	return name;
 }
     
-string Token::getAttribute() {
+int Token::getAttribute() {
 	return attribute;
 }		

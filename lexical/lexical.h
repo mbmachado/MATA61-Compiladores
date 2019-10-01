@@ -9,24 +9,29 @@ using namespace std;
 class Token {      
 	private:            
     	string name;       
-    	string attribute;
+    	int attribute;
 
     public:
-    	Token(string n, string a);
+    	Token(string n, int a);
     	string getName();
-    	string getAttribute();
+    	int getAttribute();
 };
 
 /**
  * The Lexical Analyzer class
  */
 class Lexical {
+	private:
+		int currentLine;
+		int currentColumn;
+
 	public:
 		Lexical();
 		Token getNextToken(istream& file);
 		bool isDigit(char c);
 		bool isLetter(char c);
 		bool isAlphanumeric(char c);
+		bool isNewLine(char c);
 		bool isDelimiter(char c);
 };
 
