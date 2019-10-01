@@ -9,26 +9,15 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-	ios_base::sync_with_stdio(false);
+	ifstream file;
+	Lexical* lexical = new Lexical();
+	file.open("lexical/source-program-1.txt");
 
-	try {
-		string line;
-		ifstream file;
-		file.open("lexical/source-program-1.txt");
-		file.exceptions(ifstream::failbit | ifstream::badbit);
-
-		while(getline(file, line)) {
-		   cout << line << endl;
-		}
-
-    	file.close();
-		
-		throw Robot_L_Lexical_Exception(1); 
-	} catch (Robot_L_Lexical_Exception e) {
-		cout << e.what() << endl;
-	} catch (ifstream::failure e) {
-		cout << "Um erro ocorreu ao manipular o arquivo.";
+	while(!file.fail()) {
+		Token t = lexical->getNextToken(file);
+		cout << "Token: <" << t.getName() << ", " << t.getAttribute() << ">" << endl;
 	}
 
+	file.close();
 	return 0;
 }

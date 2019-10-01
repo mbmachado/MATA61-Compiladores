@@ -9,26 +9,25 @@ using namespace std;
 class Token {      
 	private:            
     	string name;       
-    	int attribute;
+    	string attribute;
 
     public:
-    	Token(string n, int a);
+    	Token(string n, string a);
     	string getName();
-    	int getAttribute();
+    	string getAttribute();
 };
 
 /**
  * The Lexical Analyzer class
  */
 class Lexical {
-	private:
-		static Lexical* instance;
-		Lexical();
-
 	public:
-		static Lexical* getInstance();
-		Token getNextToken();
-	
+		Lexical();
+		Token getNextToken(istream& file);
+		bool isDigit(char c);
+		bool isLetter(char c);
+		bool isAlphanumeric(char c);
+		bool isDelimiter(char c);
 };
 
 /**
@@ -48,7 +47,12 @@ class Robot_L_Lexical_Exception : public exception {
 			switch (code) {
 				case 1:
 					return "Error Exception: Identificador mal formado na linha y, coluna x.";
-				break;
+				case 2:
+					return "Error Exception: Número mal formado na linha y, coluna x.";
+				case 3:
+					return "Error Exception: Valor numérico muito grande na linha y, coluna x.";
+				case 4:
+					return "Error Exception: Símbolo não reconhecido na linha y, coluna x.";
 				default:
 					return "Error Exception: código de erro desconhecido.";
 			}
