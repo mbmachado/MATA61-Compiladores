@@ -19,7 +19,8 @@ class Symbol {
 		Symbol(int v);
 		string getLexeme();
 		int getColumn();
-		int getLine();	
+		int getLine();
+		int getValue();
 };
 
 /**
@@ -44,5 +45,6 @@ class SymbolTable {
 		string getToken(string lexeme);
 		int installID(string lexeme, int column, int line);
 		int installNum(string lexeme, int column, int line);
-		bool isKeyWord();
+		bool isKeyWord(string lexeme);
+		Symbol getSymbol(int index);
 };

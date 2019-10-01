@@ -15,7 +15,8 @@ int main(int argc, char const *argv[])
 
 	while(!file.fail()) {
 		Token t = lexical->getNextToken(file);
-		cout << "Token: <" << t.getName() << ", " << t.getAttribute() << ">" << endl;
+		
+		t.serialize();
 	}
 
 	file.close();

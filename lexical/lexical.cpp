@@ -155,4 +155,14 @@ string Token::getName() {
     
 int Token::getAttribute() {
 	return attribute;
-}		
+}
+
+void Token::serialize() {
+	SymbolTable* st = SymbolTable::getInstance();
+	Symbol s = st->getSymbol(attribute);
+
+	if(name.compare("num") == 0)
+		cout << "<" << name << ", SymbolTable(" << attribute << ") => { value: " << s.getValue() << ", line: " << s.getLine() << ", column: " << s.getColumn() << " }>" << endl;
+	else 
+		cout << "<" << name << ", SymbolTable(" << attribute << ") => { lexeme: " << s.getLexeme() << ", line: " << s.getLine() << ", column: " << s.getColumn() << " }>" << endl;
+}

@@ -1,6 +1,5 @@
 #include <string>
 #include <exception>
-#include <iostream>
 
 using namespace std;
 
@@ -16,6 +15,7 @@ class Token {
     	Token(string n, int a);
     	string getName();
     	int getAttribute();
+    	void serialize();
 };
 
 /**
