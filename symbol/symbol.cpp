@@ -42,7 +42,7 @@ SymbolTable* SymbolTable::getInstance() {
 
 SymbolTable::SymbolTable() {}
 
-string SymbolTable::getTokenName(string lexeme) {
+string SymbolTable::getToken(string lexeme) {
 	transform(lexeme.begin(), lexeme.end(), lexeme.begin(), ::tolower);
 	
 	set<string>::iterator it;

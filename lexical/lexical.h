@@ -34,6 +34,7 @@ class Lexical {
 		bool isAlphanumeric(char c);
 		bool isNewLine(char c);
 		bool isDelimiter(char c);
+		void handleUnget(char c);
 };
 
 /**
@@ -48,9 +49,9 @@ class Robot_L_Lexical_Exception : public exception {
 	public:
 		Robot_L_Lexical_Exception(int code, int line, int column) {
 			if (code == 1) message = "Error Exception: Identificador mal formado na linha " + to_string(line) + ", coluna " + to_string(column) +".";
-			else if (code == 2) message = "Error Exception: Número mal formado na linha " + to_string(line) + ", coluna " + to_string(column) +".";
-			else if (code == 3) message = "Error Exception: Valor numérico muito grande na linha " + to_string(line) + ", coluna " + to_string(column) +".";
-			else if (code == 4) message = "Error Exception: Símbolo não reconhecido na linha " + to_string(line) + ", coluna " + to_string(column) +".";
+			else if (code == 2) message = "Error Exception: Natural mal formado na linha " + to_string(line) + ", coluna " + to_string(column) +".";
+			else if (code == 3) message = "Error Exception: Natural muito grande na linha " + to_string(line) + ", coluna " + to_string(column) +".";
+			else if (code == 4) message = "Error Exception: Elemento desconhecido na linha " + to_string(line) + ", coluna " + to_string(column) +".";
 			else message = "Error Exception: erro desconhecido.";
 		}
 

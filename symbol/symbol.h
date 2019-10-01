@@ -41,7 +41,7 @@ class SymbolTable {
 		SymbolTable(const SymbolTable&) = delete;
 		SymbolTable& operator=(const SymbolTable&) = delete;
 		static SymbolTable* getInstance();
-		string getTokenName(string lexeme);
+		string getToken(string lexeme);
 		int installID(string lexeme, int column, int line);
 		int installNum(string lexeme, int column, int line);
 		bool isKeyWord();

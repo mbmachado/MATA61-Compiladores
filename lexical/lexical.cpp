@@ -6,7 +6,7 @@
 using namespace std;
 
 Lexical::Lexical() {
-	line = 0;
+	line = 1;
 	column = 0;
 }
 
@@ -17,11 +17,14 @@ Token Lexical::getNextToken(istream& file) {
 		SymbolTable* st = SymbolTable::getInstance();
 		
 		while (file.get(c)) {
+			column++;
 			lexeme += c;
+			if (isNewLine(c)) {
+				line++; column = 0; 
+			}
 			
 			switch (state) {
 				case 0:
-					//cout << "no estado 0, comparando: '" << c << "'" << endl;
 					if(c == '#') state = 5;
 					else if(isDelimiter(c)) state = 7;
 					else if(isLetter(c)) state = 1;
@@ -29,47 +32,41 @@ Token Lexical::getNextToken(istream& file) {
 					else throw Robot_L_Lexical_Exception(4, line, column);
 					break;
 				case 1:
-					//cout << "no estado 1, comparando: '" << c << "'" << endl;
-					if(isDelimiter(c)) { state = 2; file.unget(); lexeme.pop_back(); }
+					if(isDelimiter(c)) { state = 2; file.unget(); lexeme.pop_back(); handleUnget(c); }
 					else if(isAlphanumeric(c)) state = 1;
 					else throw Robot_L_Lexical_Exception(1, line, column);
-					//cout << "next state: " << state << endl;
 					break;
 				case 2:
-					//cout << "estado 2" << endl;
 					file.unget();
+					handleUnget(c);
 					lexeme.pop_back();
-					return Token(st->getTokenName(lexeme), st->installID(lexeme, column, line));
+					return Token(st->getToken(lexeme), st->installID(lexeme, column, line));
 				case 3:
-					//cout << "estado 3" << endl;
-					if(isDelimiter(c)) { state = 4; file.unget(); lexeme.pop_back(); }
+					if(isDelimiter(c)) { state = 4; file.unget(); lexeme.pop_back(); handleUnget(c); }
 					else if(isDigit(c)) state = 3;
 					else throw Robot_L_Lexical_Exception(2, line, column);
 					break;
 				case 4:
-					//cout << "estado 4" << endl;
 					file.unget();
+					handleUnget(c);
 					lexeme.pop_back();
 					return Token("num",  st->installNum(lexeme, column, line));
 				case 5:
-					//cout << "estado 5" << endl;
 					if(!isNewLine(c)) state = 5; 
-					else { state = 6; file.unget(); }
+					else { state = 6; file.unget(); handleUnget(c); }
 					break;
 				case 6:
-					//cout << "estado 6" << endl;
 					state = 0;
 					lexeme = "";
 					break;
 				case 7:
-					//cout << "estado 7" << endl;
 					if(isDelimiter(c)) state = 7;
-					else { state = 8; file.unget(); }
+					else { state = 8; file.unget(); handleUnget(c); }
 					break;
 				case 8:
-					//cout << "estado 8" << endl;
 					state = 0;
 					file.unget();
+					handleUnget(c);
 					lexeme = "";
 					break;
 			}
@@ -140,6 +137,11 @@ bool Lexical::isDelimiter(char c) {
 	if(isNewLine(c) || c == '	' || c == ' ')
 		return true;
 	return false;
+}
+
+void Lexical::handleUnget(char c) {
+	column--;
+	if (isNewLine(c)) line--;
 }
 
 Token::Token(string n, int a) {
