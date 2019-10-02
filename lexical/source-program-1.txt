@@ -2,6 +2,9 @@
 
 PROGRAMAINICIO # Um lindo comentário 1909#)#()!(109==-+[]
 	DEFINAINSTRUCAO Trilha COMO
+
+
+
 	INICIO
 		Mova 3   Passos
 		Aguarde Ate Robo Pronto

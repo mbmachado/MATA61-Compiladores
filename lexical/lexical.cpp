@@ -15,13 +15,12 @@ Token Lexical::getNextToken(istream& file) {
 		int state = 0;
 		char c; string lexeme = "";
 		SymbolTable* st = SymbolTable::getInstance();
-		
+
 		while (file.get(c)) {
+			if (isNewLine(c))
+				line++;
 			column++;
 			lexeme += c;
-			if (isNewLine(c)) {
-				line++; column = 0; 
-			}
 			
 			switch (state) {
 				case 0:
@@ -69,6 +68,15 @@ Token Lexical::getNextToken(istream& file) {
 					handleUnget(c);
 					lexeme = "";
 					break;
+			}
+
+			if (isNewLine(c)) {
+				char a;
+				file.get(a);
+				file.unget();
+
+				if(!isNewLine(a))
+					column = 0;
 			}
 		}
 
@@ -133,15 +141,14 @@ bool Lexical::isNewLine(char c) {
 }
 
 bool Lexical::isDelimiter(char c) {
-	// ASCII way c == 9 || c == 32 || c == 10 || c == 13
 	if(isNewLine(c) || c == '	' || c == ' ')
 		return true;
 	return false;
 }
 
 void Lexical::handleUnget(char c) {
-	column--;
-	if (isNewLine(c)) line--;
+	if(column > 0) column--;
+	if(isNewLine(c)) line--;
 }
 
 Token::Token(string n, int a) {
@@ -162,7 +169,8 @@ void Token::serialize() {
 	Symbol s = st->getSymbol(attribute);
 
 	if(name.compare("num") == 0)
-		cout << "<" << name << ", SymbolTable(" << attribute << ") => { value: " << s.getValue() << ", line: " << s.getLine() << ", column: " << s.getColumn() << " }>" << endl;
+		cout << "<" << name << ", (" << attribute << ") => { value: " << s.getValue() << " }>" << endl;
+	else if (name.compare("EOF") == 0) {}
 	else 
-		cout << "<" << name << ", SymbolTable(" << attribute << ") => { lexeme: " << s.getLexeme() << ", line: " << s.getLine() << ", column: " << s.getColumn() << " }>" << endl;
+		cout << "<" << name << ", (" << attribute << ") => { lexeme: " << s.getLexeme() << ", line: " << s.getLine() << ", column: " << s.getColumn() << " }>" << endl;
 }

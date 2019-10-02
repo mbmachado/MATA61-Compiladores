@@ -5,14 +5,12 @@
 
 using namespace std;
 
-// Atributos de identificador
 Symbol::Symbol(string le, int c, int li) {
 	lexeme = le;
 	column = c;
 	line = li;
 }
 
-// Atributos de número
 Symbol::Symbol(int v) {
 	value = v;
 }
