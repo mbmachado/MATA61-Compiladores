@@ -1,0 +1,29 @@
+// programa com elemento desconhecido
+PROGRAMAINICIO
+	DEFINAINSTRUCAO Apagar#Frente COMO
+	INICIO
+		enquanto Lampada Apagada a Frente faca
+			mova 1 passos5
+		fimpara
+		enquanto Lampada acesa a frente faca
+			Apague Lampada
+			mova 100 passos
+		fimpara
+	FIM
+	EXECUCAOINICIO
+		aguarde ate robo pronto
+			
+			enquanto robo movimentando faca
+				Apagar123
+			fimpara
+
+			se frente robo bloqueada faca
+				vire para direita
+				mova 1 passos
+				repita 10 vezes
+					Apagar123
+				fimrepita
+			fimse
+		finalize
+	FIMEXECUCAO
+FIMPROGRAMA
