@@ -1,0 +1,28 @@
+# programa para apagar as luzes
+PROGRAMAINICIO
+	DEFINAINSTRUCAO ApagarFrente COMO
+	INICIO
+		enquanto Lampada Apagada a Frente faca
+			mova 1 passos
+		fimpara
+		enquanto Lampada acesa a frente faca
+			Apague Lampada
+			mova 1 passos
+		fimpara
+	FIM
+	EXECUCAOINICIO
+		aguarde ate robo pronto
+			mova 1 passos
+
+			enquanto robo movimentando faca
+				ApagarFrente
+			fimpara
+
+			se frente robo bloqueada faca
+				vire para direita
+				mova 1 passos
+				repita 2 vezes ApagarFrente
+			fimse
+		finalize
+	FIMEXECUCAO
+FIMPROGRAMA

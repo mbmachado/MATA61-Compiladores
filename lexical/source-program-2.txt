@@ -1,0 +1,24 @@
+# programa para acender as luzes
+PROGRAMAINICIO
+	DEFINAINSTRUCAO Rotina COMO
+	INICIO
+		MOVA 15 Passos
+		enquanto Lampada Apagada a Frente faca
+			Acenda Lampada
+			Vire Para esquerda
+		fimpara
+
+		vire para direita
+		repita 15 vezes	
+			mova 1 passo
+			se Lampada Apagada a Frente entao
+				Acenda Lampada
+			fimse
+		fimrepita
+	FIM
+	EXECUCAOINICIO
+		aguarde ate robo pronto
+		Repita 2 vezes Rotina
+		finalize
+	FIMEXECUCAO
+FIMPROGRAMA
