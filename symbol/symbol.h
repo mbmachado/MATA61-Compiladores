@@ -34,7 +34,7 @@ class SymbolTable {
 			"como", "inicio", "fim", "repita", "vezes", "fimrepita", "enquanto", "faca", "fimpara", "se", "entao", 
 			"fimse", "senao", "fimsenao", "mova", "passo", "passos", "vire", "para", "pare", "finalize", "apague", 
 			"acenda", "lampada", "aguarde", "ate", "robo", "pronto", "ocupado", "parado", "movimentando", "frente",
-			"direita", "esquerda", "bloqueada", "acessa", "apagada", "a"
+			"direita", "esquerda", "bloqueada", "acesa", "apagada", "a"
 		};
 		vector<Symbol> symbols;
 	

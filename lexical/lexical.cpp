@@ -47,8 +47,8 @@ Token Lexical::getNextToken(istream& file) {
 					break;
 				case 4:
 					file.unget();
-					handleUnget(c);
 					lexeme.pop_back();
+					handleUnget(c);
 					return Token("num",  st->installNum(lexeme, column, line));
 				case 5:
 					if(!isNewLine(c)) state = 5; 
@@ -65,8 +65,8 @@ Token Lexical::getNextToken(istream& file) {
 				case 8:
 					state = 0;
 					file.unget();
-					handleUnget(c);
 					lexeme = "";
+					handleUnget(c);
 					break;
 			}
 
@@ -80,7 +80,7 @@ Token Lexical::getNextToken(istream& file) {
 			}
 		}
 
-		return Token("EOF", 0);
+		return Token("$", 0);
 	} catch (Robot_L_Lexical_Exception e) {
 		cout << e.what() << endl;
 		exit(EXIT_FAILURE);
@@ -88,21 +88,21 @@ Token Lexical::getNextToken(istream& file) {
 }
 
 bool Lexical::isDigit(char c) {
-	if(c == '0' || c == '1' || 
-		c == '2' || c == '3' || 
+	if(c == '0' || c == '1' ||
+		c == '2' || c == '3' ||
 		c == '4' || c == '5' ||
-		c == '6' || c == '7' || 
+		c == '6' || c == '7' ||
 		c == '8' || c == '9' 
 	) return true;
 	return false;
 }
 
 bool Lexical::isLetter(char c) {
-	if(c == 'a' || c == 'A' || 
-		c == 'b' || c == 'B' || 
+	if(c == 'a' || c == 'A' ||
+		c == 'b' || c == 'B' ||
 		c == 'c' || c == 'C' ||
-		c == 'd' || c == 'D' || 
-		c == 'e' || c == 'E' || 
+		c == 'd' || c == 'D' ||
+		c == 'e' || c == 'E' ||
 		c == 'f' || c == 'F' ||
 		c == 'g' || c == 'G' ||
 		c == 'h' || c == 'H' ||
@@ -170,7 +170,7 @@ void Token::serialize() {
 
 	if(name.compare("num") == 0)
 		cout << "<" << name << ", (" << attribute << ") => { value: " << s.getValue() << " }>" << endl;
-	else if (name.compare("EOF") == 0) {}
+	else if (name.compare("$") == 0) {}
 	else 
 		cout << "<" << name << ", (" << attribute << ") => { lexeme: " << s.getLexeme() << ", line: " << s.getLine() << ", column: " << s.getColumn() << " }>" << endl;
 }

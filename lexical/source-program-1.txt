@@ -6,7 +6,7 @@ PROGRAMAINICIO # Um lindo comentário 1909#)#()!(109==-+[]
 
 
 	INICIO
-		Mova 3   Passos
+		Mova 30   Passos
 		Aguarde Ate Robo Pronto
 		Vire Para ESQUERDA
 		Apague Lampada
