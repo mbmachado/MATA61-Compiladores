@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 /**
  * The Syntactic Analyzer class
  */
@@ -119,7 +118,7 @@ class Syntactic {
 		Syntactic();
 		void analyze();
 		bool isTerminal(string top);
-		bool isTableErrorInput(string top, string name);
+		bool isTableErrorInput(string top, string input);
 };
 
 /**
@@ -132,9 +131,12 @@ class Robot_L_Syntactic_Exception : public exception {
 		string message;
 
 	public:
-		Robot_L_Syntactic_Exception(int code, int line) {
-			if (code == 1) message = "Error Exception: estrutura incorreta na linha " + to_string(line) + ".";
-			else message = "Error Exception: erro desconhecido.";
+		Robot_L_Syntactic_Exception(int line) {
+			message = "Error Exception: estrutura incorreta na linha " + to_string(line) + ".";
+		}
+
+		Robot_L_Syntactic_Exception(int line, string terminal) {
+			message = "Error Exception: um '" + terminal + "' era esperado na linha " + to_string(line) + ".";
 		}
 
 		virtual const char* what() const throw() {

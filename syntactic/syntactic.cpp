@@ -7,9 +7,9 @@
 using namespace std;
 
 Syntactic::Syntactic() {
+	stack.push("$");
 	stack.push("programa");
 }
-
 
 void Syntactic::analyze() {
 	ifstream file;
@@ -17,52 +17,39 @@ void Syntactic::analyze() {
 	SymbolTable* st = SymbolTable::getInstance();
 	file.open("lexical/source-program-1.txt");
 
-	cout << " em analyze" << endl;
-	while(!file.fail()) {		
-		cout << " primeiro while" << endl;
-		Token token = lexical->getNextToken(file);
-		Symbol s = st->getSymbol(token.getAttribute());
-		string top = stack.top();
-		token.serialize();
+	Token token = lexical->getNextToken(file);
+	Symbol s = st->getSymbol(token.getAttribute());
+	string top = stack.top();
 
-		while(!stack.empty()) {
-			cout << " segundo while" << endl;
-			try {
-				if(top.compare(token.getName()) == 0) {
-					cout << " primeiro if" << endl;
-
-					stack.pop();
-					token = lexical->getNextToken(file);
-					s = st->getSymbol(token.getAttribute());
-				} else if(isTerminal(top)) {
-					cout << " segundo if" << endl;
-
-					throw Robot_L_Syntactic_Exception(1, s.getLine());
-				} else if(isTableErrorInput(top, token.getName())) {
-					cout << " terceiro if" << endl;
-
-					throw Robot_L_Syntactic_Exception(1, s.getLine());
-				} else if(!isTableErrorInput(top, token.getName())) {
-					cout << " quarto if" << endl;
-
-					stack.pop();
-					vector<string> production = M[{top, token.getName()}];
-					cout << "Escolheu: " << top << " ::= ";
-					for(vector<string>::iterator it = production.begin(); it != production.end(); ++it) { 
-						cout << *it << ' ';
-					}
-					cout << endl;
-
-					for(vector<string>::reverse_iterator rit = production.rbegin(); rit != production.rend(); ++rit) { 
-						stack.push(*rit);
-					} 
+	while(top.compare("$") != 0) {
+		cout << "TOPO_PILHA: " << top << " | ENTRADA: " << token.getName() << endl;
+		try {
+			if(top.compare(token.getName()) == 0) {
+				cout << "  Topo da pilha e Entrada iguais, desempilha" << endl;
+				stack.pop();
+				token = lexical->getNextToken(file);
+				s = st->getSymbol(token.getAttribute());
+			} else if(isTerminal(top)) {
+				cout << "  Topo da pilha com terminal diferente da Entrada" << endl;
+				throw Robot_L_Syntactic_Exception(s.getLine(), top);
+			} else if(isTableErrorInput(top, token.getName())) {
+				cout << "  M[Topo, Entrada] retorna erro" << endl;
+				throw Robot_L_Syntactic_Exception(s.getLine());
+			} else if(!isTableErrorInput(top, token.getName())) {
+				cout << "  M[Topo, Entrada] retorna uma regra e esta foi empilhada" << endl;
+				stack.pop();
+				vector<string> production = M[{top, token.getName()}];
+				for(vector<string>::reverse_iterator rit = production.rbegin(); rit != production.rend(); ++rit) { 
+					string symbol = *rit;
+					if(symbol.compare("&") != 0)
+						stack.push(symbol);
 				}
-
-				top = stack.top();
-			} catch (Robot_L_Syntactic_Exception e) {
-				cout << e.what() << endl;
-				exit(EXIT_FAILURE);
 			}
+
+			top = stack.top();
+		} catch (Robot_L_Syntactic_Exception e) {
+			cout << e.what() << endl;
+			exit(EXIT_FAILURE);
 		}
 	}
 
@@ -76,9 +63,9 @@ bool Syntactic::isTerminal(string top) {
 	return false;
 }
 
-bool Syntactic::isTableErrorInput(string top, string name) {
+bool Syntactic::isTableErrorInput(string top, string input) {
 	map< pair<string, string>, vector<string> >::iterator it;
-	it = M.find({top, name});
+	it = M.find({top, input});
 
 	if (it == M.end())
 		return true;
