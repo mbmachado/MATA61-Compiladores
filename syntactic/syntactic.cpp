@@ -11,33 +11,55 @@ Syntactic::Syntactic() {
 }
 
 
-void Syntactic::analyze(string fileName) {
+void Syntactic::analyze() {
 	ifstream file;
 	Lexical* lexical = new Lexical();
-	file.open(fileName);
+	SymbolTable* st = SymbolTable::getInstance();
+	file.open("lexical/source-program-1.txt");
 
-	while(!file.fail()) {
-		SymbolTable* st = SymbolTable::getInstance();
+	cout << " em analyze" << endl;
+	while(!file.fail()) {		
+		cout << " primeiro while" << endl;
 		Token token = lexical->getNextToken(file);
 		Symbol s = st->getSymbol(token.getAttribute());
 		string top = stack.top();
+		token.serialize();
+
 		while(!stack.empty()) {
+			cout << " segundo while" << endl;
 			try {
-				if(top.compare(token.getName())) {
+				if(top.compare(token.getName()) == 0) {
+					cout << " primeiro if" << endl;
+
 					stack.pop();
 					token = lexical->getNextToken(file);
 					s = st->getSymbol(token.getAttribute());
 				} else if(isTerminal(top)) {
-					throw Robot_L_Syntactic_Exception(1, s.getLine(), s.getColumn());
-				} else if(false/*TODO*/) {
-					throw Robot_L_Syntactic_Exception(1, s.getLine(), s.getColumn());
-				} else if(false/*TODO*/) {
-					// TODO
+					cout << " segundo if" << endl;
+
+					throw Robot_L_Syntactic_Exception(1, s.getLine());
+				} else if(isTableErrorInput(top, token.getName())) {
+					cout << " terceiro if" << endl;
+
+					throw Robot_L_Syntactic_Exception(1, s.getLine());
+				} else if(!isTableErrorInput(top, token.getName())) {
+					cout << " quarto if" << endl;
+
 					stack.pop();
+					vector<string> production = M[{top, token.getName()}];
+					cout << "Escolheu: " << top << " ::= ";
+					for(vector<string>::iterator it = production.begin(); it != production.end(); ++it) { 
+						cout << *it << ' ';
+					}
+					cout << endl;
+
+					for(vector<string>::reverse_iterator rit = production.rbegin(); rit != production.rend(); ++rit) { 
+						stack.push(*rit);
+					} 
 				}
 
 				top = stack.top();
-			} catch (Robot_L_Lexical_Exception e) {
+			} catch (Robot_L_Syntactic_Exception e) {
 				cout << e.what() << endl;
 				exit(EXIT_FAILURE);
 			}
@@ -48,6 +70,17 @@ void Syntactic::analyze(string fileName) {
 }
 
 bool Syntactic::isTerminal(string top) {
-	// TODO
-	return true;
+	SymbolTable* st = SymbolTable::getInstance();
+	if(st->isKeyWord(top) || top.compare("id") == 0 || top.compare("num") == 0)
+		return true;
+	return false;
+}
+
+bool Syntactic::isTableErrorInput(string top, string name) {
+	map< pair<string, string>, vector<string> >::iterator it;
+	it = M.find({top, name});
+
+	if (it == M.end())
+		return true;
+	return false;
 }

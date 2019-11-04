@@ -1,12 +1,9 @@
 # Exemplo de comentário genteeeee
 
-PROGRAMAINICIO # Um lindo comentário 1909#)#()!(109==-+[]
+PROGRAMAINICIO
 	DEFINAINSTRUCAO Trilha COMO
-
-
-
 	INICIO
-		Mova 30   Passos
+		Mova 30 Passos DEFINAINSTRUCAO
 		Aguarde Ate Robo Pronto
 		Vire Para ESQUERDA
 		Apague Lampada

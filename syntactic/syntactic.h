@@ -117,8 +117,9 @@ class Syntactic {
 
 	public:
 		Syntactic();
-		void analyze(string fileName);
+		void analyze();
 		bool isTerminal(string top);
+		bool isTableErrorInput(string top, string name);
 };
 
 /**
@@ -131,8 +132,8 @@ class Robot_L_Syntactic_Exception : public exception {
 		string message;
 
 	public:
-		Robot_L_Syntactic_Exception(int code, int line, int column) {
-			if (code == 1) message = "Error Exception: problema sintático na linha " + to_string(line) + ", coluna " + to_string(column) +".";
+		Robot_L_Syntactic_Exception(int code, int line) {
+			if (code == 1) message = "Error Exception: estrutura incorreta na linha " + to_string(line) + ".";
 			else message = "Error Exception: erro desconhecido.";
 		}
 
