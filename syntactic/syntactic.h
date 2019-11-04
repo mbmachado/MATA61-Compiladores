@@ -117,7 +117,7 @@ class Syntactic {
 
 	public:
 		Syntactic();
-		void analyze();
+		void analyze(string fileName);
 		bool isTerminal(string top);
 };
 

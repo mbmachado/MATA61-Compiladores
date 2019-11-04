@@ -7,6 +7,8 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
+	Syntactic* syntactic = new Syntactic();
+	syntactic->analyze("lexical/source-program-1.txt");
 	/*
 	ifstream file;
 	Lexical* lexical = new Lexical();

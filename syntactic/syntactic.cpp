@@ -11,10 +11,10 @@ Syntactic::Syntactic() {
 }
 
 
-void Syntactic::analyze() {
+void Syntactic::analyze(string fileName) {
 	ifstream file;
 	Lexical* lexical = new Lexical();
-	file.open("lexical/source-program-1.txt");
+	file.open(fileName);
 
 	while(!file.fail()) {
 		SymbolTable* st = SymbolTable::getInstance();
