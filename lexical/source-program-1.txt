@@ -3,7 +3,7 @@
 PROGRAMAINICIO
 	DEFINAINSTRUCAO Trilha COMO
 	INICIO
-		Mova 30
+		Mova
 		Aguarde Ate Robo Pronto
 		Vire Para ESQUERDA
 		Apague Lampada
