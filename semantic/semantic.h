@@ -12,7 +12,7 @@ class Semantic {
 
 	public:
 		Semantic();
-		void analyze(string symbol, int line);
+		void analyze(string symbol, string lexeme, int line);
 };
 
 /**

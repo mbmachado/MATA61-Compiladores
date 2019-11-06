@@ -1,25 +1,27 @@
 #include "semantic.h"
+#include "../symbol/symbol.h"
 #include <iostream>
 
 Semantic::Semantic() {
 	state = 0;
 }
 
-void Semantic::analyze(string symbol, int line) {
+void Semantic::analyze(string symbol, string lexeme, int line) {
 	try {
+		SymbolTable* st = SymbolTable::getInstance();
 		
 		switch (state) {
 			case 0:
 				if(symbol.compare("definainstrucao") == 0) state = 1;
 				else if(symbol.compare("id") == 0) { 
-					if(/*Não está na tabela de simbolos*/ false) throw Robot_L_Semantic_Exception(2, line);
+					if(!st->find(lexeme)) throw Robot_L_Semantic_Exception(2, line);
 				} else if(symbol.compare("mova") == 0) state = 2;
 				else if(symbol.compare("vire") == 0) state = 9;
 				break;
 			case 1:
 				if(symbol.compare("id") == 0) {
-					if(/*Está na tabela de simbolos*/ false) throw Robot_L_Semantic_Exception(1, line);
-					else {/*Inserir na tabela de simbolos*/state = 0;} 
+					if(st->find(lexeme)) throw Robot_L_Semantic_Exception(1, line);
+					else {st->insert(lexeme); state = 0;} 
 				} break;
 			case 2:
 				if(symbol.compare("num") == 0) state = 3;

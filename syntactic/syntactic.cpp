@@ -29,7 +29,7 @@ void Syntactic::analyze() {
 			if(top.compare(token.getName()) == 0) {
 				cout << "  Topo da pilha e Entrada iguais, desempilha" << endl;
 				stack.pop();
-				semantic->analyze(token.getName(), s.getLine());
+				semantic->analyze(token.getName(), s.getLexeme(), s.getLine());
 				token = lexical->getNextToken(file);
 				s = st->getSymbol(token.getAttribute());
 			} else if(isTerminal(top)) {

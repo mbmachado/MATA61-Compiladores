@@ -9,9 +9,13 @@ Symbol::Symbol(string le, int c, int li) {
 	lexeme = le;
 	column = c;
 	line = li;
+	value = 0;
 }
 
 Symbol::Symbol(int v) {
+	lexeme = "";
+	column = 0;
+	line = 0;
 	value = v;
 }
 
@@ -79,4 +83,20 @@ bool SymbolTable::isKeyWord(string lexeme) {
 Symbol SymbolTable::getSymbol(int index) {
 	Symbol s = symbols[index];
 	return s;
+}
+
+void SymbolTable::insert(string id) {
+	transform(id.begin(), id.end(), id.begin(), ::tolower);
+	identifiers.insert(id);
+}
+
+bool SymbolTable::find(string id) {
+	transform(id.begin(), id.end(), id.begin(), ::tolower);
+
+	set<string>::iterator it;
+	it = identifiers.find(id);
+
+	if(it != identifiers.end())
+		return true;
+	return false;
 }

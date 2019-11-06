@@ -37,6 +37,7 @@ class SymbolTable {
 			"direita", "esquerda", "bloqueada", "acesa", "apagada", "a"
 		};
 		vector<Symbol> symbols;
+		set<string> identifiers;
 	
 	public:
 		SymbolTable(const SymbolTable&) = delete;
@@ -47,4 +48,7 @@ class SymbolTable {
 		int installNum(string lexeme, int column, int line);
 		bool isKeyWord(string lexeme);
 		Symbol getSymbol(int index);
+		
+		void insert(string id);
+		bool find(string id);
 };
