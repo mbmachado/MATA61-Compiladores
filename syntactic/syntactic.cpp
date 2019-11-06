@@ -1,6 +1,7 @@
 #include "syntactic.h"
 #include "../lexical/lexical.h"
 #include "../symbol/symbol.h"
+#include "../semantic/semantic.h"
 #include <iostream>
 #include <fstream>
 
@@ -14,6 +15,7 @@ Syntactic::Syntactic() {
 void Syntactic::analyze() {
 	ifstream file;
 	Lexical* lexical = new Lexical();
+	Semantic* semantic = new Semantic();
 	SymbolTable* st = SymbolTable::getInstance();
 	file.open("lexical/source-program-1.txt");
 
@@ -27,6 +29,7 @@ void Syntactic::analyze() {
 			if(top.compare(token.getName()) == 0) {
 				cout << "  Topo da pilha e Entrada iguais, desempilha" << endl;
 				stack.pop();
+				semantic->analyze(token.getName(), s.getLine());
 				token = lexical->getNextToken(file);
 				s = st->getSymbol(token.getAttribute());
 			} else if(isTerminal(top)) {

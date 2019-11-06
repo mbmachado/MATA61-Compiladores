@@ -2,6 +2,7 @@
 #include "symbol/symbol.h"
 #include "lexical/lexical.h"
 #include "syntactic/syntactic.h"
+#include "semantic/semantic.h"
 
 using namespace std;
 

@@ -9,7 +9,7 @@ PROGRAMAINICIO
 		Apague Lampada
 		Vire Para DIREITA
 		Mova 1 Passos
-		Aguarde ate Robo Pronto
+		Aguarde ate Robo parado
 	FIM
 	EXECUCAOINICIO
 		Repita 3 VEZES 
@@ -18,6 +18,9 @@ PROGRAMAINICIO
 		pare
 		acenda lampada
 		SE ROBO PRONTO ENTAO VIRE PARA ESQUERDA FIMSE
-		Vire Para DIREITA
+		Vire Para esquerda
+		Vire Para esquerda
+		Vire Para esquerda
+		Vire Para direita
 	 FIMEXECUCAO
 FIMPROGRAMA

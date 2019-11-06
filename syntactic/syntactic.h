@@ -152,11 +152,11 @@ class Robot_L_Syntactic_Exception : public exception {
 
 	public:
 		Robot_L_Syntactic_Exception(int line) {
-			message = "Error Exception: estrutura incorreta na linha " + to_string(line) + ".";
+			message = "Error Exception: Estrutura incorreta na linha " + to_string(line) + ".";
 		}
 
 		Robot_L_Syntactic_Exception(int line, string terminal) {
-			message = "Error Exception: um '" + terminal + "' era esperado na linha " + to_string(line) + ".";
+			message = "Error Exception: Um '" + terminal + "' era esperado na linha " + to_string(line) + ".";
 		}
 
 		virtual const char* what() const throw() {
