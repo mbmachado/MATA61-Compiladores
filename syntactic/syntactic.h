@@ -11,7 +11,7 @@ using namespace std;
  */
 class Syntactic {
 	private:
-		stack<string> stack;
+		stack<string> _stack;
 		map< pair<string, string>, vector<string> > M = {
 		{{"programa", "programainicio"}, {"programainicio", "declaracoes", "execucaoinicio", "comando", "comandos", "fimexecucao", "fimprograma"}},
 		{{"declaracoes", "execucaoinicio"}, {"&"}},

@@ -8,8 +8,8 @@
 using namespace std;
 
 Syntactic::Syntactic() {
-	stack.push("$");
-	stack.push("programa");
+	_stack.push("$");
+	_stack.push("programa");
 }
 
 void Syntactic::analyze() {
@@ -21,14 +21,14 @@ void Syntactic::analyze() {
 
 	Token token = lexical->getNextToken(file);
 	Symbol s = st->getSymbol(token.getAttribute());
-	string top = stack.top();
+	string top = _stack.top();
 
 	while(top.compare("$") != 0) {
 		cout << "TOPO_PILHA: " << top << " | ENTRADA: " << token.getName() << endl;
 		try {
 			if(top.compare(token.getName()) == 0) {
 				cout << "  Topo da pilha e Entrada iguais, desempilha" << endl;
-				stack.pop();
+				_stack.pop();
 				semantic->analyze(token.getName(), s.getLexeme(), s.getLine());
 				token = lexical->getNextToken(file);
 				s = st->getSymbol(token.getAttribute());
@@ -40,16 +40,16 @@ void Syntactic::analyze() {
 				throw Robot_L_Syntactic_Exception(s.getLine());
 			} else if(!isTableErrorInput(top, token.getName())) {
 				cout << "  M[Topo, Entrada] retorna uma regra e esta foi empilhada" << endl;
-				stack.pop();
+				_stack.pop();
 				vector<string> production = M[{top, token.getName()}];
 				for(vector<string>::reverse_iterator rit = production.rbegin(); rit != production.rend(); ++rit) { 
 					string symbol = *rit;
 					if(symbol.compare("&") != 0)
-						stack.push(symbol);
+						_stack.push(symbol);
 				}
 			}
 
-			top = stack.top();
+			top = _stack.top();
 		} catch (Robot_L_Syntactic_Exception e) {
 			cout << e.what() << endl;
 			exit(EXIT_FAILURE);
