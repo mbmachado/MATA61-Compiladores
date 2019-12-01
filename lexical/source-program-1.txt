@@ -1,17 +1,7 @@
 # Exemplo de comentário genteeeee
 
 PROGRAMAINICIO
-	DEFINAINSTRUCAO sasssa COMO
-	INICIO
-		Mova
-		Aguarde Ate Robo Pronto
-		Vire Para ESQUERDA
-		Apague Lampada
-		Vire Para DIREITA
-		Mova 1 Passos
-		Aguarde ate Robo pronto
-	FIM
-	DEFINAINSTRUCAO ok COMO
+	DEFINAINSTRUCAO trilha COMO
 	INICIO
 		Mova
 		Aguarde Ate Robo Pronto
@@ -23,7 +13,7 @@ PROGRAMAINICIO
 	FIM
 	EXECUCAOINICIO
 		Repita 3 VEZES 
-			sasssa 
+			trilha 
 		fimrepita
 		pare
 		acenda lampada

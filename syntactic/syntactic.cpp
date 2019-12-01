@@ -2,6 +2,8 @@
 #include "../lexical/lexical.h"
 #include "../symbol/symbol.h"
 #include "../semantic/semantic.h"
+#include "../code-generator/code.h"
+#include <regex>
 #include <iostream>
 #include <fstream>
 
@@ -14,8 +16,10 @@ Syntactic::Syntactic() {
 
 void Syntactic::analyze() {
 	ifstream file;
+	regex _regex("r[0-9]+"); 
 	Lexical* lexical = new Lexical();
 	Semantic* semantic = new Semantic();
+	Code* codeGenerator = new Code();
 	SymbolTable* st = SymbolTable::getInstance();
 	file.open("lexical/source-program-1.txt");
 
@@ -24,23 +28,28 @@ void Syntactic::analyze() {
 	string top = _stack.top();
 
 	while(top.compare("$") != 0) {
-		cout << "TOPO_PILHA: " << top << " | ENTRADA: " << token.getName() << endl;
+		//cout << "TOPO_PILHA: " << top << " | ENTRADA: " << token.getName() << endl;
 		try {
-			if(top.compare(token.getName()) == 0) {
-				cout << "  Topo da pilha e Entrada iguais, desempilha" << endl;
+			if(regex_match(top, _regex)) {
+				//cout << "  Topo da pilha com Gera Código, desempilha" << endl;
+				_stack.pop();
+				codeGenerator->generateCode(top);
+			} else if(top.compare(token.getName()) == 0) {
+				//cout << "  Topo da pilha e Entrada iguais, desempilha" << endl;
 				_stack.pop();
 				semantic->analyze(token.getName(), s.getLexeme(), s.getLine());
 				token = lexical->getNextToken(file);
 				s = st->getSymbol(token.getAttribute());
 			} else if(isTerminal(top)) {
-				cout << "  Topo da pilha com terminal diferente da Entrada" << endl;
+				//cout << "  Topo da pilha com terminal diferente da Entrada" << endl;
 				throw Robot_L_Syntactic_Exception(s.getLine(), top);
 			} else if(isTableErrorInput(top, token.getName())) {
-				cout << "  M[Topo, Entrada] retorna erro" << endl;
+				//cout << "  M[Topo, Entrada] retorna erro" << endl;
 				throw Robot_L_Syntactic_Exception(s.getLine());
 			} else if(!isTableErrorInput(top, token.getName())) {
-				cout << "  M[Topo, Entrada] retorna uma regra e esta foi empilhada" << endl;
+				//cout << "  M[Topo, Entrada] retorna uma regra e esta foi empilhada" << endl;
 				_stack.pop();
+
 				vector<string> production = M[{top, token.getName()}];
 				for(vector<string>::reverse_iterator rit = production.rbegin(); rit != production.rend(); ++rit) { 
 					string symbol = *rit;

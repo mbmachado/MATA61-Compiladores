@@ -13,7 +13,7 @@ class Syntactic {
 	private:
 		stack<string> _stack;
 		map< pair<string, string>, vector<string> > M = {
-		{{"programa", "programainicio"}, {"programainicio", "declaracoes", "execucaoinicio", "comando", "comandos", "fimexecucao", "fimprograma"}},
+		{{"programa", "programainicio"}, {"programainicio", "r0", "declaracoes", "execucaoinicio", "comando", "comandos", "fimexecucao", "fimprograma", "r1"}},
 		{{"declaracoes", "execucaoinicio"}, {"&"}},
 		{{"declaracoes", "definainstrucao"}, {"declaracao", "declaracoes"}},
 		{{"declaracao", "definainstrucao"}, {"definainstrucao", "id", "como", "comando"}},

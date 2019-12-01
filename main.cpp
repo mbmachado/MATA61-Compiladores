@@ -3,6 +3,7 @@
 #include "lexical/lexical.h"
 #include "syntactic/syntactic.h"
 #include "semantic/semantic.h"
+#include "code-generator/code.h"
 
 using namespace std;
 
