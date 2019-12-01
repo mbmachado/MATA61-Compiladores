@@ -169,7 +169,7 @@ void Token::serialize() {
 	Symbol s = st->getSymbol(attribute);
 
 	if(name.compare("num") == 0)
-		cout << "<" << name << ", (" << attribute << ") => { value: " << s.getValue() << " }>" << endl;
+		cout << "<" << name << ", (" << attribute << ") => { value: " << s.getLexeme() << " }>" << endl;
 	else if (name.compare("$") == 0) {}
 	else 
 		cout << "<" << name << ", (" << attribute << ") => { lexeme: " << s.getLexeme() << ", line: " << s.getLine() << ", column: " << s.getColumn() << " }>" << endl;

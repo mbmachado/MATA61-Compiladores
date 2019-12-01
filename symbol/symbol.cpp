@@ -9,14 +9,12 @@ Symbol::Symbol(string le, int c, int li) {
 	lexeme = le;
 	column = c;
 	line = li;
-	value = 0;
 }
 
-Symbol::Symbol(int v) {
-	lexeme = "";
+Symbol::Symbol(string le) {
+	lexeme = le;
 	column = 0;
 	line = 0;
-	value = v;
 }
 
 string Symbol::getLexeme() {
@@ -29,10 +27,6 @@ int Symbol::getColumn() {
 
 int Symbol::getLine() {
 	return line;
-}
-
-int Symbol::getValue() {
-	return value;
 }
 
 SymbolTable* SymbolTable::instance = 0;
@@ -60,14 +54,10 @@ int SymbolTable::installID(string lexeme, int column, int line) {
 }
 
 int SymbolTable::installNum(string lexeme, int column, int line) {
-	int value = 1;
-
 	if(lexeme.size() > 7)
 		throw Robot_L_Lexical_Exception(3, line, column);
-	else
-		value = stoi(lexeme, nullptr);
 
-	symbols.push_back(Symbol(value));
+	symbols.push_back(Symbol(lexeme));
 	return symbols.size() - 1;
 }
 

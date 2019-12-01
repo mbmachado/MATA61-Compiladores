@@ -33,7 +33,7 @@ void Syntactic::analyze() {
 			if(regex_match(top, _regex)) {
 				//cout << "  Topo da pilha com Gera Código, desempilha" << endl;
 				_stack.pop();
-				codeGenerator->generateCode(top);
+				codeGenerator->generateCode(top, s.getLexeme());
 			} else if(top.compare(token.getName()) == 0) {
 				//cout << "  Topo da pilha e Entrada iguais, desempilha" << endl;
 				_stack.pop();

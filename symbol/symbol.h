@@ -12,15 +12,13 @@ class Symbol {
 		string lexeme;
 		int column;
 		int line;
-		int value;
 
 	public:
 		Symbol(string le, int c, int li);
-		Symbol(int v);
+		Symbol(string le);
 		string getLexeme();
 		int getColumn();
 		int getLine();
-		int getValue();
 };
 
 /**

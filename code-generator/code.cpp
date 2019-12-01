@@ -7,12 +7,7 @@ Code::Code() {
 	ifCounter = 0;
 	whileCounter = 0;
 	forCounter = 0;
-	labelCounter = 0;
-}
-
-void Code::generateCode(string action) {
-	if(action.compare("r0") == 0) r0();
-	else if (action.compare("r1") == 0) r1();
+	blockCounter = 0;
 }
 
 void Code::r0() {
@@ -33,7 +28,7 @@ void Code::r0() {
 
 void Code::r1() {
 	cout <<
-	";=================================== BEGIN PROCEDURES\n\n" <<
+	";============================ BEGIN STANDARD PROCEDURES\n\n" <<
 	"; do nothing procedure:\n" <<
 	"do_nothing proc\n" <<
 	"mov al, 0\n" <<
@@ -96,5 +91,137 @@ void Code::r1() {
 	"       jz busy2 ; no new data, so wait.\n" <<
 	"ret    \n" <<
 	"wait_exam endp\n\n" <<
-	";=================================== END PROCEDURES\n";
+	";============================ END STANDARD PROCEDURES\n";
+}
+
+void Code::r2(string lex) {
+	lastID = lex;
+	cout <<
+	lex << 
+	" proc\n";
+};
+
+void Code::r3() {
+	cout <<
+	lastID << 
+	" endp\n\n";
+};
+
+void Code::r4() {
+	cout <<
+	"BLOCO" << 
+	to_string(++blockCounter) <<
+	":\n";
+};
+
+void Code::r5(string lex) {
+	cout <<
+	"mov cx, " <<
+	lex <<
+	"\nFOR" << 
+	to_string(++forCounter) <<
+	":\n";
+};
+
+void Code::r6() {
+	cout <<
+	"loop FOR" << 
+	to_string(++forCounter) <<
+	"\n";
+};
+
+void Code::r7() {
+
+};
+
+void Code::r8() {
+
+};
+
+void Code::r9() {
+
+};
+
+void Code::r10() {
+
+};
+
+void Code::r11() {
+
+};
+
+void Code::r12() {
+
+};
+
+void Code::r13() {
+
+};
+
+void Code::r14() {
+
+};
+
+void Code::r15() {
+
+};
+
+void Code::r16() {
+
+};
+
+void Code::r17() {
+
+};
+
+void Code::r18() {
+
+};
+
+void Code::r19() {
+
+};
+
+void Code::r20() {
+
+};
+
+void Code::r21() {
+
+};
+
+void Code::r22() {
+
+};
+
+void Code::r23() {
+
+};
+
+void Code::r24() {
+
+};
+
+void Code::r25() {
+
+};
+
+void Code::generateCode(string action, string lex) {
+	if(action.compare("r0") == 0) r0();
+	else if (action.compare("r1") == 0) r1();
+	else if (action.compare("r2") == 0) r2(lex);
+	else if (action.compare("r3") == 0) r3();
+	else if (action.compare("r4") == 0) r4();
+	else if (action.compare("r5") == 0) r5(lex);
+	else if (action.compare("r6") == 0) r6();
+	else if (action.compare("r7") == 0) r7();
+	else if (action.compare("r8") == 0) r8();
+	else if (action.compare("r9") == 0) r9();
+	else if (action.compare("r10") == 0) r10();
+	else if (action.compare("r11") == 0) r11();
+	else if (action.compare("r12") == 0) r12();
+	else if (action.compare("r13") == 0) r13();
+	else if (action.compare("r14") == 0) r14();
+	else if (action.compare("r15") == 0) r15();
+	else if (action.compare("r16") == 0) r16();
 }
