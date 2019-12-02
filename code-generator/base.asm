@@ -1,4 +1,4 @@
-; MATA60 - Robot-L intermediate code - Mateus Barbosa
+; MATA60 - Robot-L intermediate code
 ; base code for controlling the robot with few procedures
 
 #start=robot.exe#
@@ -18,11 +18,10 @@ r_port equ 9
 ;=================================== BEGIN PROGRAM
 
 call wait_robot
-call exam_front
 
+call exam_front
 ; get result of exam:
 in al, r_port + 1
-
 call wait_exam
 
 ; nothing found?

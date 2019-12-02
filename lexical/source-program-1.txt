@@ -15,6 +15,9 @@ PROGRAMAINICIO
 		Repita 3 VEZES 
 			trilha 
 		fimrepita
+		enquanto robo pronto faca 
+			trilha
+		fimpara 
 		pare
 		acenda lampada
 		SE ROBO PRONTO ENTAO VIRE PARA ESQUERDA FIMSE

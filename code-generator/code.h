@@ -14,7 +14,8 @@ class Code {
 		int whileCounter;
 		int forCounter;
 		int blockCounter;
-		string lastID;
+		string aux1;
+		string aux2;
 		stack<string> _stack;
 
 	public:
@@ -40,7 +41,7 @@ class Code {
 		void r17();
 		void r18();
 		void r19();
-		void r20();
+		void r20(string lex);
 		void r21();
 		void r22();
 		void r23();
