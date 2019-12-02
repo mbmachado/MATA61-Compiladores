@@ -47,4 +47,6 @@ class Code {
 		void r23();
 		void r24();
 		void r25();
+		void r26();
+		void r27();
 };

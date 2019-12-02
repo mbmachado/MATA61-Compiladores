@@ -142,6 +142,7 @@ void Code::r9() { // Início IF
 };
 
 void Code::r10() { // Fim IF
+	cout <<
 	"AFTERIF" << _stack.top() << ":\n\n";
 	_stack.pop();
 };
@@ -153,7 +154,7 @@ void Code::r11() { // Tem parede na frente?
 	"; get result of exam:\n" <<
 	"in al, r_port + 1\n" <<
 	"cmp al, 255\n" <<
-	"jne AFTER" << aux1 << _stack.top();
+	"jne AFTER" << aux1 << _stack.top() << "\n";
 };
 
 void Code::r12() { // Tem parede na direita?
@@ -163,7 +164,7 @@ void Code::r12() { // Tem parede na direita?
 	"; get result of exam:\n" <<
 	"in al, r_port + 1\n" <<
 	"cmp al, 15\n" <<
-	"jne AFTER" << aux1 << _stack.top();
+	"jne AFTER" << aux1 << _stack.top() << "\n";
 };
 
 void Code::r13() { // Tem parede na esquerda?
@@ -173,7 +174,7 @@ void Code::r13() { // Tem parede na esquerda?
 	"; get result of exam:\n" <<
 	"in al, r_port + 1\n" <<
 	"cmp al, 240\n" <<
-	"jne AFTER" << aux1 << _stack.top();
+	"jne AFTER" << aux1 << _stack.top() << "\n";
 };
 
 void Code::r14() { // Tem lâmpada acesa?
@@ -192,7 +193,7 @@ void Code::r16() { // Tem lâmpada acesa ou apagada a frente?
 		"; get result of exam:\n" <<
 		"in al, r_port + 1\n" <<
 		"cmp al, 7\n" <<
-		"jne AFTER" << aux1 << _stack.top();
+		"jne AFTER" << aux1 << _stack.top() << "\n";
 	} else if(aux2.compare("apagada") == 0) {
 		cout <<
 		"call exam_front\n" <<
@@ -200,7 +201,7 @@ void Code::r16() { // Tem lâmpada acesa ou apagada a frente?
 		"; get result of exam:\n" <<
 		"in al, r_port + 1\n" <<
 		"cmp al, 8\n" <<
-		"jne AFTER" << aux1 << _stack.top();
+		"jne AFTER" << aux1 << _stack.top() << "\n";
 	}
 };
 
@@ -212,7 +213,7 @@ void Code::r17() { // Tem lâmpada acesa ou apagada a esquerda? É uma instruç�
 		"; get result of exam:\n" <<
 		"in al, r_port + 1\n" <<
 		"cmp al, 9\n" <<
-		"jne AFTER" << aux1 << _stack.top();
+		"jne AFTER" << aux1 << _stack.top() << "\n";
 	} else if(aux2.compare("apagada") == 0) {
 		cout <<
 		"call exam_front\n" <<
@@ -220,9 +221,11 @@ void Code::r17() { // Tem lâmpada acesa ou apagada a esquerda? É uma instruç�
 		"; get result of exam:\n" <<
 		"in al, r_port + 1\n" <<
 		"cmp al, 10\n" <<
-		"jne AFTER" << aux1 << _stack.top();
+		"jne AFTER" << aux1 << _stack.top() << "\n";
 	} else if(aux2.compare("vira") == 0) {
-
+		cout <<
+		"call turn_left\n" <<
+		"call wait_robot\n\n";
 	}
 };
 
@@ -244,12 +247,17 @@ void Code::r18() { // Tem lâmpada acesa ou apagada a direita? É uma instruçã
 		"cmp al, 12\n" <<
 		"jne AFTER" << aux1 << _stack.top();
 	} else if(aux2.compare("vira") == 0) {
-		
+		cout <<
+		"call turn_right\n" <<
+		"call wait_robot\n\n";
 	}
 };
 
-void Code::r19() {
-
+void Code::r19() { //Robô Ocupado?
+	cout << 
+	"in al, r_port + 2\n" <<
+	"test al, 00000000b\n" <<
+	"jne AFTER" << aux1 << _stack.top() << "\n";
 };
 
 void Code::r20(string lex) {
@@ -278,8 +286,19 @@ void Code::r24() {
 	"call switch_on_lamp\n\n";
 };
 
-void Code::r25() {
+void Code::r25() { // Robô pronto?
+	cout << 
+	"in al, r_port + 2\n" <<
+	"test al, 00000010b\n" <<
+	"jne AFTER" << aux1 << _stack.top() << "\n";
+};
 
+void Code::r26() { 
+	
+};
+
+void Code::r27() { 
+	
 };
 
 void Code::generateCode(string action, string lex) {
@@ -300,4 +319,15 @@ void Code::generateCode(string action, string lex) {
 	else if (action.compare("r14") == 0) r14();
 	else if (action.compare("r15") == 0) r15();
 	else if (action.compare("r16") == 0) r16();
+	else if (action.compare("r17") == 0) r17();
+	else if (action.compare("r18") == 0) r18();
+	else if (action.compare("r19") == 0) r19();
+	else if (action.compare("r20") == 0) r20(lex);
+	else if (action.compare("r21") == 0) r21();
+	else if (action.compare("r22") == 0) r22();
+	else if (action.compare("r23") == 0) r23();
+	else if (action.compare("r24") == 0) r24();
+	else if (action.compare("r25") == 0) r25();
+	else if (action.compare("r26") == 0) r26();
+	else if (action.compare("r27") == 0) r27();
 }
